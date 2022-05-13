@@ -222,6 +222,19 @@
   },
   {
     "inputs": [],
+    "name": "lastTest",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "nonce",
     "outputs": [
       {
@@ -297,6 +310,25 @@
   {
     "inputs": [],
     "name": "signaturesRequired",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "testingList",
     "outputs": [
       {
         "internalType": "uint256",

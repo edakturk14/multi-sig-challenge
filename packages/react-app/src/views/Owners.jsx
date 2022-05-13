@@ -6,7 +6,7 @@ import { useLocalStorage } from "../hooks";
 
 const { Option } = Select;
 
-export default function Owners({contractName, ownerEvents, signaturesRequired, address, nonce, userProvider, mainnetProvider, localProvider, yourLocalBalance, price, tx, readContracts, writeContracts, blockExplorer }) {
+export default function Owners({owners, contractName, ownerEvents, signaturesRequired, address, nonce, userProvider, mainnetProvider, localProvider, yourLocalBalance, price, tx, readContracts, writeContracts, blockExplorer }) {
 
   const history = useHistory();
 
@@ -20,26 +20,45 @@ export default function Owners({contractName, ownerEvents, signaturesRequired, a
   return (
     <div>
       <h2 style={{marginTop:32}}>Signatures Required: {signaturesRequired?signaturesRequired.toNumber():<Spin></Spin>}</h2>
-      <List
-        style={{maxWidth:400,margin:"auto",marginTop:32}}
-        bordered
-        dataSource={ownerEvents}
-        renderItem={(item) => {
-          return (
-            <List.Item key={"owner_"+item[0]}>
-            <Address
-              address={item[0]}
-              ensProvider={mainnetProvider}
-              blockExplorer={blockExplorer}
-              fontSize={32}
-            />
-            <div style={{padding:16}}>
-              {item[1]?"👍":"👎"}
-            </div>
-            </List.Item>
-          )
-        }}
-      />
+      
+      <div style={{border:"1px solid #cccccc", padding:16, width:400, margin:"auto",marginTop:64}}>    
+        <h2>Active Signers:</h2>
+          <List
+            style={{maxWidth:400,margin:"auto",marginTop:32}}
+            dataSource={owners}
+            renderItem={(item) => {
+              return (
+                <List.Item key={item.blockNumber + "_" + item.args.sender + "_" + item.args.purpose}>
+                <Address address={item.args[0]} ensProvider={mainnetProvider} fontSize={16} />
+                {item.args[1]}
+              </List.Item>
+              )
+            }}
+          />
+      </div>
+
+      <div style={{border:"1px solid #cccccc", padding:16, width:400, margin:"auto",marginTop:64}}>    
+        <h2>Events:</h2>
+          <List
+            style={{maxWidth:400,margin:"auto",marginTop:32}}
+            dataSource={ownerEvents}
+            renderItem={(item) => {
+              return (
+                <List.Item key={"owner_"+item[0]}>
+                <Address
+                  address={item[0]}
+                  ensProvider={mainnetProvider}
+                  blockExplorer={blockExplorer}
+                  fontSize={32}
+                />
+                <div style={{padding:16}}>
+                  {item[1]?"👍":"👎"}
+                </div>
+                </List.Item>
+              )
+            }}
+          />
+      </div>
 
       <div style={{border:"1px solid #cccccc", padding:16, width:400, margin:"auto",marginTop:64}}>
         <div style={{margin:8,padding:8}}>

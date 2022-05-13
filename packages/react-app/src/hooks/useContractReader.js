@@ -3,7 +3,7 @@ import usePoller from "./Poller";
 import useOnBlock from "./OnBlock";
 import { Provider } from "@ethersproject/providers";
 
-const DEBUG = false;
+const DEBUG = true;
 
 /*
   ~ What it does? ~

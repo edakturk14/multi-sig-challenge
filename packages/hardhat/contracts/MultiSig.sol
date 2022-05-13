@@ -22,13 +22,14 @@ contract MultiSig {
     event ExecuteTransaction(address indexed owner, address payable to, uint256 value, bytes data, uint256 nonce, bytes32 hash, bytes result);
     event Owner(address indexed owner, bool added);
 
-    address [ ] public owners; // store the owners 
+    
     mapping(address => bool) public isOwner;
 
     uint public signaturesRequired;
 
     uint public nonce;
     uint public chainId;
+    address[] public owners;
 
     constructor(address[] memory _owners, uint _signaturesRequired) {
         require(_signaturesRequired > 0, "must have required signature");
