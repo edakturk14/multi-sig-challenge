@@ -21,15 +21,15 @@ contract MultiSig {
 
     event ExecuteTransaction(address indexed owner, address payable to, uint256 value, bytes data, uint256 nonce, bytes32 hash, bytes result);
     event Owner(address indexed owner, bool added);
-
     
     mapping(address => bool) public isOwner;
+
+    address[] public allOwners; //because can't get addresses from mapping 
 
     uint public signaturesRequired;
 
     uint public nonce;
     uint public chainId;
-    address[] public owners;
 
     constructor(address[] memory _owners, uint _signaturesRequired) {
         require(_signaturesRequired > 0, "must have required signature");
@@ -39,9 +39,28 @@ contract MultiSig {
             require(owner != address(0), "ser plz enter address");
             require(!isOwner[owner], "ser u are already owner");
             isOwner[owner] = true;
-            owners.push(owner); // add the owner to the state var
+
+            allOwners.push(_owners[i]); // since we can not get from mapping 
+
             emit Owner(owner, isOwner[owner]);
         }
+    }
+
+    function getAllOwners() view public returns (address[] memory) {
+        return allOwners;
+    }
+    function getIndex(address _addr) public view returns(uint) {
+        uint i = 0;
+        while (allOwners[i] != _addr) {
+            i++;
+        }
+        return i;
+    }
+    function removeOwner(address _addr) public{
+        uint i = getIndex(_addr);
+        delete allOwners[i]; // it will leave a blank in the array 
+        // todo: transfer for the new array instead of leaving blank
+        // not the best way but works  
     }
 
     modifier onlySelf() {
@@ -55,6 +74,7 @@ contract MultiSig {
         require(newSignaturesRequired > 0, "addSigner: must be non-zero sigs required");
         isOwner[newSigner] = true;
         signaturesRequired = newSignaturesRequired;
+        allOwners.push(newSigner); 
         emit Owner(newSigner, isOwner[newSigner]);
     }
 
@@ -63,6 +83,7 @@ contract MultiSig {
         require(newSignaturesRequired > 0, "removeSigner: must be non-zero sigs required");
         isOwner[oldSigner] = false;
         signaturesRequired = newSignaturesRequired;
+        removeOwner(oldSigner);
         emit Owner(oldSigner, isOwner[oldSigner]);
     }
 
@@ -70,11 +91,12 @@ contract MultiSig {
         return keccak256(abi.encodePacked(address(this), chainId, _nonce, to, value, data));
     }
 
-    function executeTransaction( address payable to, uint256 value, bytes memory data, bytes[] memory signatures) onlySelf public returns (bytes memory) {
+    function executeTransaction(address payable to, uint256 value, bytes memory data, bytes[] memory signatures) onlySelf public returns (bytes memory) {
         bytes32 _hash =  getTransactionHash(nonce, to, value, data);
         nonce++;
         uint256 validSignatures;
         address duplicateGuard;
+
         for (uint i = 0; i < signatures.length; i++) {
             address recovered = recover(_hash,signatures[i]);
             require(recovered>duplicateGuard, "executeTransaction: duplicate or unordered signatures");
@@ -87,7 +109,8 @@ contract MultiSig {
         require(validSignatures>=signaturesRequired, "executeTransaction: not enough valid signatures");
 
         (bool success, bytes memory result) = to.call{value: value}(data);
-        require(success, "executeTransaction: tx failed");
+        // This will fail if you do not have funds in your multisig
+        require(success, "Ser do you have money in the smart contract?? How can you send something you don't have");
 
         emit ExecuteTransaction(msg.sender, to, value, data, nonce-1, _hash, result);
         return result;

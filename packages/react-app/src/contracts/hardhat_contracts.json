@@ -5,7 +5,7 @@
       "chainId": "31337",
       "contracts": {
         "MultiSig": {
-          "address": "0x0165878A594ca255338adfa4d48449f69242Eb8F",
+          "address": "0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82",
           "abi": [
             {
               "inputs": [
@@ -129,6 +129,25 @@
               "type": "function"
             },
             {
+              "inputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
+                }
+              ],
+              "name": "allOwners",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
               "inputs": [],
               "name": "chainId",
               "outputs": [
@@ -173,6 +192,38 @@
                 }
               ],
               "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "getAllOwners",
+              "outputs": [
+                {
+                  "internalType": "address[]",
+                  "name": "",
+                  "type": "address[]"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_addr",
+                  "type": "address"
+                }
+              ],
+              "name": "getIndex",
+              "outputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
               "type": "function"
             },
             {
@@ -230,44 +281,12 @@
             },
             {
               "inputs": [],
-              "name": "lastTest",
-              "outputs": [
-                {
-                  "internalType": "uint256",
-                  "name": "",
-                  "type": "uint256"
-                }
-              ],
-              "stateMutability": "view",
-              "type": "function"
-            },
-            {
-              "inputs": [],
               "name": "nonce",
               "outputs": [
                 {
                   "internalType": "uint256",
                   "name": "",
                   "type": "uint256"
-                }
-              ],
-              "stateMutability": "view",
-              "type": "function"
-            },
-            {
-              "inputs": [
-                {
-                  "internalType": "uint256",
-                  "name": "",
-                  "type": "uint256"
-                }
-              ],
-              "name": "owners",
-              "outputs": [
-                {
-                  "internalType": "address",
-                  "name": "",
-                  "type": "address"
                 }
               ],
               "stateMutability": "view",
@@ -301,6 +320,19 @@
               "inputs": [
                 {
                   "internalType": "address",
+                  "name": "_addr",
+                  "type": "address"
+                }
+              ],
+              "name": "removeOwner",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
                   "name": "oldSigner",
                   "type": "address"
                 },
@@ -318,25 +350,6 @@
             {
               "inputs": [],
               "name": "signaturesRequired",
-              "outputs": [
-                {
-                  "internalType": "uint256",
-                  "name": "",
-                  "type": "uint256"
-                }
-              ],
-              "stateMutability": "view",
-              "type": "function"
-            },
-            {
-              "inputs": [
-                {
-                  "internalType": "uint256",
-                  "name": "",
-                  "type": "uint256"
-                }
-              ],
-              "name": "testingList",
               "outputs": [
                 {
                   "internalType": "uint256",

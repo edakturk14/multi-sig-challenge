@@ -1,7 +1,5 @@
 import { useContractReader } from "eth-hooks";
-import { ethers } from "ethers";
 import React from "react";
-import { Link } from "react-router-dom";
 
 /**
  * web3 props can be passed from '../App.jsx' into your local view component for use
@@ -20,6 +18,12 @@ function Home({ yourLocalBalance, readContracts }) {
         <span style={{ marginRight: 8 }}>👷‍♀️</span>
         Welcome to my multisig!
       </div>
+      <div style={{ maxWidth: 820, margin: "auto", marginTop: 16, paddingBottom: 6 }}>
+          <a href={"https://github.com/edakturk14/speed-run-ethereum/"} target="_blank">
+              <input type="button" value="🌟 View My SpeedRun Repo on GitHub 🌟" />
+          </a>
+      </div>
+      🌟 don't forget to put a <b>star</b> there 🌟
     </div>
   );
 }

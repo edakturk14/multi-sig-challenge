@@ -174,8 +174,8 @@
       ]
     },
     "/Users/edaakturk/Desktop/multi-sig-challenge/packages/hardhat/contracts/MultiSig.sol": {
-      "lastModificationDate": 1652427777219,
-      "contentHash": "1243dda32169b7352bcdbb6ffcd1bb81",
+      "lastModificationDate": 1652544711707,
+      "contentHash": "71954a7ee8749151f596d22f3102ecac",
       "sourceName": "contracts/MultiSig.sol",
       "solcConfig": {
         "version": "0.8.4",

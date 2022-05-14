@@ -172,11 +172,9 @@ function App(props) {
     const signaturesRequired = useContractReader(readContracts, ContractName, "signaturesRequired");
     const ownerEvents = useEventListener(readContracts, ContractName, "Owner", localProvider, 1);
     const nonce = useContractReader(readContracts, ContractName, "nonce");
-    const owners = useContractReader(readContracts, ContractName, "owners");
-    const lastTest = useContractReader(readContracts, ContractName, "lastTest");
+    const owners = useContractReader(readContracts, ContractName, "allOwners");
+    const contractAddress = readContracts?.MultiSigWallet?.address;
 
-    console.log("test print");
-    console.log(lastTest);
     console.log("******");
     // const poolServerUrl = "https://backend.multisig.holdings:49832/"
     const poolServerUrl = "http://localhost:49832/"
@@ -290,10 +288,12 @@ function App(props) {
         </Menu>
 
         <Switch>
+
           <Route exact path="/">
             {/* pass in any web3 props to this Home component. For example, yourLocalBalance */}
             <Home yourLocalBalance={yourLocalBalance} readContracts={readContracts} />
           </Route>
+
           <Route exact path="/debug">
             <Contract
               name={ContractName}
@@ -305,7 +305,6 @@ function App(props) {
               contractConfig={contractConfig}
             />
           </Route>
-
 
           <Route exact path="/owners">
               <Owners
@@ -323,6 +322,43 @@ function App(props) {
                 blockExplorer={blockExplorer}
                 nonce={nonce}
                 ownerEvents={ownerEvents}
+                signaturesRequired={signaturesRequired}
+              />
+            </Route>
+
+            <Route path="/create">
+              <CreateTransaction
+                poolServerUrl={poolServerUrl}
+                contractName={ContractName}
+                contractAddress={contractAddress}
+                mainnetProvider={mainnetProvider}
+                localProvider={localProvider}
+                price={price}
+                tx={tx}
+                readContracts={readContracts}
+                userSigner={userSigner}
+                DEBUG={DEBUG}
+                nonce={nonce}
+                blockExplorer={blockExplorer}
+                signaturesRequired={signaturesRequired}
+              />
+            </Route>
+
+            <Route path="/pool">
+              <Transactions
+                poolServerUrl={poolServerUrl}
+                contractName={ContractName}
+                address={address}
+                userSigner={userSigner}
+                mainnetProvider={mainnetProvider}
+                localProvider={localProvider}
+                yourLocalBalance={yourLocalBalance}
+                price={price}
+                tx={tx}
+                writeContracts={writeContracts}
+                readContracts={readContracts}
+                blockExplorer={blockExplorer}
+                nonce={nonce}
                 signaturesRequired={signaturesRequired}
               />
             </Route>

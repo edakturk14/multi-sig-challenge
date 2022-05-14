@@ -20,22 +20,6 @@ export default function Owners({owners, contractName, ownerEvents, signaturesReq
   return (
     <div>
       <h2 style={{marginTop:32}}>Signatures Required: {signaturesRequired?signaturesRequired.toNumber():<Spin></Spin>}</h2>
-      
-      <div style={{border:"1px solid #cccccc", padding:16, width:400, margin:"auto",marginTop:64}}>    
-        <h2>Active Signers:</h2>
-          <List
-            style={{maxWidth:400,margin:"auto",marginTop:32}}
-            dataSource={owners}
-            renderItem={(item) => {
-              return (
-                <List.Item key={item.blockNumber + "_" + item.args.sender + "_" + item.args.purpose}>
-                <Address address={item.args[0]} ensProvider={mainnetProvider} fontSize={16} />
-                {item.args[1]}
-              </List.Item>
-              )
-            }}
-          />
-      </div>
 
       <div style={{border:"1px solid #cccccc", padding:16, width:400, margin:"auto",marginTop:64}}>    
         <h2>Events:</h2>
